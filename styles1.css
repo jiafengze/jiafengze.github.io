@@ -1,0 +1,108 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.introduction, .discussion {
+    text-align: left; /* 修改为左对齐 */
+    width: 100%;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-basis: calc(100% - 840px); /* Adjust based on canvas size */
+}
+
+canvas {
+    border: 2px solid #000;
+    background-color: #fff;
+    flex-grow: 1;
+    max-width: 800px;
+    height: 800px; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="number"], button {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.discussion {
+    margin-top: 40px;
+}
+
+.slider-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.export-button {
+    margin: 10px;
+    padding: 5px 15px;
+    font-size: 16px;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+.canvas-container {
+    margin-top: 20px;
+    border: 1px solid #000;
+    padding: 10px;
+    position: relative;
+}
+
+.canvas-container h3 {
+    position: absolute;
+    top: -10px;
+    background: #fff;
+    padding: 0 5px;
+}
+
+.status {
+    margin-top: 5px;
+}
+
+ul {
+    list-style-type: disc; /* 确保列表项使用默认的列表符号 */
+    margin-left: 20px; /* 增加列表项的左边距 */
+}
+
+li {
+    margin-bottom: 5px; /* 增加列表项之间的间距 */
+}
+
+a {
+    display: block; /* 确保链接独占一行 */
+    margin-top: 5px; /* 增加链接之间的间距 */
+}

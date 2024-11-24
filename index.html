@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>等厚干涉模拟实验</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+    <div class="container">
+        <section class="introduction">
+            <h1>Part1: 光路模拟 - 劈尖</h1>
+            <p>介绍：该图为《大学物理实验教程》实验18图18-3的动图（注意图上标注的n>n0应改为n小于n0），这是一个用于模拟光路通过劈尖的交互式工具。您可以调整参数，观察光路的变化。</p>
+            <p>实验活动1：</p>
+                <li>（1）物理与数学区分的核心是物理中存在许多近似计算，请调整参数，感受实际光程差与近似光程差的大小关系，并思考学习这种近似思想</li>
+                <li>（2）在劈尖干涉中，思考当玻璃倾角增大时，条纹宽度以及条纹间距增大还是减小，为什么？（请尝试给出公式推导并定性说明）（书上给出了条纹间距的理论公式）</li>
+                <li>（3）在劈尖干涉实验中，上下玻璃片另外两个表面的反射光是否会对空气劈尖干涉条纹产生影响？为什么？</li>
+        </section>
+        <div class="controls">
+            <label for="xA">A的横坐标X_A (微米):</label>
+            <input type="number" id="xA" name="xA" value="100" step="0.1" min="0.1">
+
+            <label for="n">中间夹层折射率n:</label>
+            <input type="number" id="n" name="n" value="1" step="0.1" min="1" max="3">
+
+            <label for="n0">上下夹层折射率n0:</label>
+            <input type="number" id="n0" name="n0" value="1.5" step="0.1" min="1" max="2">
+
+            <label for="theta">劈尖倾斜角度theta (度):</label>
+            <input type="number" id="theta" name="theta" value="5" step="1" min="0" max="90">
+
+            <label for="viewX">观测窗横坐标 (μm):</label>
+            <input type="number" id="viewX" name="viewX" value="0" step="0.1" min="0">
+
+            <label for="viewY">观测窗纵坐标 (μm):</label>
+            <input type="number" id="viewY" name="viewY" value="0" step="0.1" min="0">
+
+            <label for="viewSize">观测窗大小 (μm):</label>
+            <input type="number" id="viewSize" name="viewSize" value="100" step="0.1" min="0">
+
+            <button id="centerOpticalPath">居中光路</button>
+            <div id="pointCoordinates">
+                <h3>点坐标 (实际坐标):</h3>
+                <p id="A-coordinates">A: (X_A, Y_A)</p>
+                <p id="B-coordinates">B: (X_B, Y_B)</p>
+                <p id="C-coordinates">C: (X_C, Y_C)</p>
+                <p id="P-coordinates">P: (X_P, Y_P)</p>
+                <p id="dert_actrual-coordinates">dert_actrual (n(|AB|+|BC|)-n0(|AP|-|CP|)): </p>
+                <p id="dert_estimated-coordinates">dert_estimated (2nh): </p>
+            </div>
+        </div>
+        <canvas id="lightPathCanvas" width="800" height="800"></canvas>
+        <section class="discussion">
+            <h2>拓展思考1：</h2>
+            <ul>
+                <li>书上给出的方法是利用干涉条纹测量牛顿环半径R以及薄片厚度d，如果给出已知尺寸的工件，试探究如何利用劈尖干涉或牛顿环干涉来测量薄膜的折射率。（并尝试评价测量手段的优劣）</li>
+                <li>尝试在以下问题中选择，查阅资料，并进行研究：
+                    <ol>
+                        <li>如何通过劈尖干涉或牛顿环干涉来研究材料的热膨胀性质，请说说思路？</li>
+                        <li>在牛顿环干涉实验中，如果改变实验环境的气压，会对干涉图样产生什么影响？</li>
+                        <li>在劈尖干涉实验中，如何通过干涉条纹的变化来测量温度变化？</li>
+                    </ol>
+                </li>
+            </ul>
+        </section>
+
+    <container>
+        <section class="introduction">
+            <h1>Part2: 干涉图样生成</h1>
+            <p>介绍：该部分为生成干涉图像，您可以调整参数，观察图样的变化，并导出图片。</p>
+            <p>实验活动2：</p>
+            <p>（1）改变参数，观察牛顿环条纹变化，并对真实实验场景进行预估。</p>
+            <p>（2）在进行实验前，有哪些注意事项需要特别关注，以确保实验的准确性和安全性？</p>
+            <p>（3）牛顿环中的中心暗斑，形成原因书上已经说明，请尝试设计另一种装置，使其根据光沿直线传播为明亮，而根据波动光学为暗纹。</p>
+        </section>
+        <label for="colorToggle">彩色模式:</label>
+        <input type="checkbox" id="colorToggle" name="colorToggle">
+        <div class="slider-container">
+            <label for="wavelength">波长 (nm): </label>
+            <input type="number" id="wavelength" min="100" max="1000" value="500" step="1" oninput="updateParameters()">
+            <span id="wavelengthValue">500</span> nm
+        </div>
+        <div class="slider-container">
+            <label for="thickness">薄膜厚度d (μm): </label>
+            <input type="number" id="thickness" min="0.1" max="1000" value="0.5" step="0.1" oninput="updateParameters()">
+            <span id="thicknessValue">0.5</span> μm
+        </div>
+        <div class="slider-container">
+            <label for="windowSize">观测窗大小 (μm): </label>
+            <input type="number" id="windowSize" min="10" max="10000" value="5000" step="1" oninput="updateParameters()">
+            <span id="windowSizeValue">5000</span> μm
+        </div>
+        <div class="slider-container">
+            <label for="theta_part2">夹角Theta (degrees): </label>
+            <input type="number" id="theta_part2" min="0.001" max="10" value="1" step="0.001" oninput="updateParameters()">
+            <span id="thetaValue">1</span> degrees
+        </div>
+    
+        <h2>干涉图样</h2>
+        <div class="canvas-container">
+            <canvas id="wedgeCanvas" width="1024" height="1024"></canvas>
+            <div class="status" id="wedgeStatus">未进行计算</div>
+            <button onclick="drawWedgePattern()">绘制图样</button>
+            <button class="export-button" onclick="exportImage('wedgeCanvas')">导出劈尖干涉图样</button>
+        </div>
+        <div class="slider-container">
+            <label for="radius">半径 (m): </label>
+            <input type="range" id="radius" min="0.1" max="1" value="0.6" step="0.01" oninput="updateParameters()">
+            <span id="radiusValue">0.6</span> m
+        </div>
+        <div class="canvas-container">
+            <canvas id="sphericalCapCanvas" width="1024" height="1024"></canvas>
+            <div class="status" id="sphericalCapStatus">未进行计算</div>
+            <button onclick="drawSphericalCapPattern()">绘制图样</button>
+            <button class="export-button" onclick="exportImage('sphericalCapCanvas')">导出牛顿环干涉图样</button>
+        </div>
+        <section class="discussion">
+            <section class="discussion">
+                <h2>拓展思考2</h2>
+                <ul>
+                    <li>（1）本次模拟图样生成给出的是指定波长单色光，实际实验中很难达到纯单色光，思考实验中选取钠灯作为光源的原因，并上网搜集相关资料。</li>
+                    <li>（2）思考干涉现象还可以进行哪些应用？</li>
+                    <li>（3）计算机仿真模拟中，每个点的计算和存储都为离散值，很难实现完全仿真，请6系学生思考，本网页仿真如何实现？以及如何减少离散值带来的影响？（试探寻更多理论工具，并对计算机仿真，数字全息等技术进行了解）</li>
+                    <li>哈工程以船出名，实际上其计算机以及其他相关技术也处领军地位，请选择阅读下面网页或者自行搜寻材料，思考工程学子如何树立科技报国志。
+                        <ul>
+                            <li><a href="https://sec.hrbeu.edu.cn/2016/0316/c469a3367/page.htm" target="_blank">虚拟船厂”教学软件，用于本科生船厂实习的教学环节</a></li>
+                            <li><a href="https://news.hrbeu.edu.cn/info/1017/47845.htm" target="_blank">核电站全范围实时仿真教学科研平台</a></li>
+                            <li><a href="https://sec.hrbeu.edu.cn/2016/0408/c1257a4198/page.htm" target="_blank">系统化操船模拟器</a></li>
+                            <li><a href="https://www.heuqst.cn/portal/lists/view/aid/114.html" target="_blank">智能船舶仿真系统</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </section>
+    </container>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jimp@0.16.1/browser/lib/jimp.min.js"></script>
+    <script src="scripts1.js"></script>
+</body>
+</html>
